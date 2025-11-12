@@ -1,0 +1,51 @@
+body {
+    color: white;
+    background: rgb(93, 88, 83);
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    padding: 4rem;
+    width: 600px;
+    height: 500px;
+}
+
+td {
+    border-top: 1px solid rgb(113, 106, 100);
+    border-left: 1px solid rgb(113, 106, 100);
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+td:first-child {
+    border-left: none;
+}
+
+tr:first-child td {
+    border-top: none;
+}
+
+.item {
+    font-size: 80px;
+    color: rgb(104, 101, 97)
+}
+
+.show {
+    display: block;
+    color: rgb(69, 111, 83);
+}
+
+.hide {
+    visibility: hidden;
+}
