@@ -28,9 +28,6 @@ const Game = () => {
             checkWinner()
             changeTurn()
         }
-        else {
-            alert("This field is taken, please select another!");
-        }
     }
     //comprobar ganador
     const checkWinner = () => {
