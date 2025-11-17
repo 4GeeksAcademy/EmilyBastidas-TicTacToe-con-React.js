@@ -2,3 +2,25 @@ body{
     background-color: rgb(93, 88, 84);
     color:white
 }
+.choose{
+    background-color: rgb(73, 67, 60);
+}
+.button-x, .button-o {
+    font-size: 40px;
+    width: 60px;
+    height: 60px; 
+    background-color: rgb(64, 57, 51); 
+    margin-bottom: 40px;
+}
+.button-x{
+    color:rgb(237, 217, 126);
+}
+.button-o{
+    color:rgb(63, 172, 214);
+}
+.board {
+    display: grid;
+    grid-template-columns: repeat(3);
+    gap: 5px;
+    justify-content: center;
+}
