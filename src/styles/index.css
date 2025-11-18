@@ -18,9 +18,32 @@ body{
 .button-o{
     color:rgb(63, 172, 214);
 }
-.board {
-    display: grid;
-    grid-template-columns: repeat(3);
-    gap: 5px;
-    justify-content: center;
+table{
+    border-collapse: collapse;
+    padding: 4rem;
+    width: 600px;
+    height: 500px;
+    font-size: 24px;
+}
+td {
+    border-top: 1px solid rgb(113, 106, 100);
+    border-left: 1px solid rgb(113, 106, 100);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+}
+td:first-child {
+    border-left: none;
+}
+
+tr:first-child td {
+    border-top: none;
+}
+.item {
+    font-size: 90px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: rgb(104, 101, 97)
 }
