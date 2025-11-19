@@ -11,15 +11,16 @@ const Home = () => {
     const [player1Simbolo, setPlayer1Simbolo] = useState(null);
     const [player2Simbolo, setPlayer2Simbolo] = useState(null);
 
+    const [winner, setWinner] = useState(null);
+
     const [mostrartablero, setMostrartablero] = useState(false);
 
     const handlePlayers = () => {
         if (inputplayer1.length > 0 && inputplayer2.length > 0) {
             setPlayer1(inputplayer1);
-            setPlayer2(inputplayer2);
+            setPlayer2(inputplayer2)
         }
     };
-
 
     const handleSeleccionSimbolos = (simbolo) => {
 
@@ -30,7 +31,7 @@ const Home = () => {
         setPlayer1(inputplayer1);
         setPlayer2(inputplayer2);
 
-        setPlayer1Simbolo(simbolo);
+        setPlayer1Simbolo(simbolo)
         setPlayer2Simbolo(simbolo === "X" ? "O" : "X");
         setMostrartablero(true);
     };
@@ -48,64 +49,70 @@ const Home = () => {
 
     const setValue = (i, j) => {
 
-        if (typeof table[i][j] == "undefined") {
-            let aux = table;
-            aux[i][j] = turn;
-            setTable(aux)
-            checkWinner()
+        if (winner) return;
+
+        if (typeof table[i][j] === "undefined") {
+            const newTable = table.map(row => [...row]);
+            newTable[i][j] = turn;
+            setTable(newTable);
+            checkWinner(newTable);
             changeTurn();
-        }
-        else {
-            alert("Please, select another place")
+        } else {
+            alert("Please, select another place");
         }
     }
 
-    const checkWinner = () => {
-        table.forEach((row, i) =>
-            row.forEach((col, j) => {
+    const checkWinner = (board) => {
+
+        //check filas
+
+        for (let i = 0; i < 3; i++) {
+            if (board[i][0] && board[i][0] === board[i][1] && board[i][0] === board[i][2]) {
+                setWinner(turn === player1Simbolo ? player1 : player2);
+            }
+        }
+
+        //check columnas
+
+        for (let j = 0; j < 3; j++) {
+            if (board[0][j] && board[0][j] === board[1][j] && board[0][j] === board[2][j]) {
+                setWinner(turn === player1Simbolo ? player1 : player2);
+                return;
+            }
+        }
+
+        // diagonales
 
 
-                if (
-                    typeof table[i][j] != "undefined" &&
-                    j > 0 && j < 2 &&
-                    table[i][j] == table[i][j + 1] &&
-                    table[i][j] == table[i][j - 1]
-                ) {
-                    console.log("ganó")
-
-                }
-
-                if (
-                    typeof table[i][j] != "undefined" &&
-                    i > 0 && i < 2 &&
-                    table[i][j] == table[i + 1][j] &&
-                    table[i][j] == table[i - 1][j]
-                ) {
-                    console.log("ganó")
-
-                }
-                //verificación diagonal
-
-                if (typeof table[0][0] != "undefined" &&
-                    table[0][0] == table[1][1] &&
-                    table[0][0] == table[2][2]
-                ) {
-                    console.log("ganó")
-
-                }
-                //verificación otra diagonal
-
-                if (typeof table[1][1] != "undefined" &&
-                    table[0][2] == table[1][1] &&
-                    table[0][2] == table[2][0]
-                ) {
-                    console.log("ganó")
-                }
-            })
-        )
+        if (board[0][0] && board[0][0] === board[1][1] && board[0][0] === board[2][2]) {
+            setWinner(turn === player1Simbolo ? player1 : player2);
+            return;
+        }
+        if (board[0][2] && board[0][2] === board[1][1] && board[0][2] === board[2][0]) {
+            setWinner(turn === player1Simbolo ? player1 : player2);
+            return;
+        }
     }
+
+    //reset
+
+    const resetGame = () => {
+        setTable([
+            [undefined, undefined, undefined],
+            [undefined, undefined, undefined],
+            [undefined, undefined, undefined]
+        ])
+
+        setTurn("X")
+        setWinner(null)
+        setMostrartablero(false)
+        setInputplayer1("")
+        setInputplayer2("")
+    };
 
     return (
+        //vistas, inputs botones, luego tablero
+
         <div className="container text-center">
 
             <h1 className="tittle mt-4">Tic Tac Toe in React.js </h1>
@@ -113,7 +120,9 @@ const Home = () => {
 
             {!mostrartablero ? (
                 <div className="choose">
+
                     <div className="input mt-5">
+
                         <br></br>
                         <h3>CHOOSE YOUR WEAPON</h3>
                         <input className="usuario1 mt-3 mb-4" type="text" placeholder="Player 1 username" value={inputplayer1} onChange={(e) => setInputplayer1(e.target.value)}></input>
@@ -128,11 +137,14 @@ const Home = () => {
 
             ) : null}
 
-
             {mostrartablero ? (
-                <div>
-                    <h2> It's {turn === player1Simbolo ? player1 : player2} turn </h2>
-                    <button className="btn btn-light mx-auto mt-5">Start Over</button>
+
+                <div className="Tablero">
+
+                    <h2 className={winner ? "winner-color" : ""}>{winner ? `${winner} Wins!` : `It's ${turn === player1Simbolo ? player1 : player2} turn`}</h2>
+
+                    <button className="btn btn-light mx-auto mt-5" onClick={resetGame}>Start Over</button>
+
                     <table className="mx-auto">
                         <tbody>
                             {table.map((row, i) => (
@@ -143,19 +155,17 @@ const Home = () => {
                                                 {col}
                                             </div>
                                         </td>
-
-
                                     ))}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+
                 </div>
             ) : null}
 
         </div>
     );
-
 };
 
 export default Home;
